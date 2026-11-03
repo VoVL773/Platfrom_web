@@ -10,7 +10,7 @@
 
 本节适用于接手者在 **Ubuntu 24.04 LTS、Python 3.12、systemd、Nginx** 环境部署完整后端平台。其他发行版请调整安装命令。域名、IP、目录和账号均由新维护者决定；本文示例不绑定原作者服务器。
 
-交接给 AI 时，请先让它阅读 [给AI的提示词和拓展要求.md](给AI的提示词和拓展要求.md)。历史部署脚本 `scripts/deploy_cloud_tls.sh` 和 `config/platform.ip.json`、`config/platform.domain.json` 含旧环境专属值，**不能直接用于新服务器**；本节提供独立部署步骤，无需运行该脚本。`CLOUD_SETUP.md` 中本机 TLS 等内容可作补充参考，新部署以本节为准。
+交接给 AI 时，请先让它阅读 [给AI的提示词和拓展要求.md](给AI的提示词和拓展要求.md)。仓库只保留 `config/*.example.json` 模板，真实域名、IP、证书与数据库路径留在各自服务器上，不随仓库分发；历史部署脚本 `scripts/deploy_cloud_tls.sh` 中的 `example.com` 也只是占位示例，**不能直接用于新服务器**。本节提供独立部署步骤，无需运行该脚本。`CLOUD_SETUP.md` 中本机 TLS 等内容可作补充参考，新部署以本节为准。
 
 ### 1. 准备环境与替换参数
 
@@ -545,12 +545,12 @@ cp dist/news-index.json news-index.json
 
 ### GitHub Pages 自动发布
 
-仓库已包含 `.github/workflows/pages.yml`。在 GitHub 仓库 **Settings → Pages → Source** 选择 **GitHub Actions**，之后推送到 `main` 会自动扫描 `_news/`、生成 `dist/` 并发布。文章格式错误会让构建失败，避免静默漏发；本地新闻页会显示错误文件。本次未在 GitHub 远程执行发布。
+仓库已包含 `.github/workflows/pages.yml`。在 GitHub 仓库 **Settings → Pages → Source** 选择 **GitHub Actions**，之后推送到 `main` 会自动扫描 `_news/`、生成 `dist/` 并发布。文章格式错误会让构建失败，避免静默漏发；本地新闻页会显示错误文件。Pages 只托管静态演示站，后端平台与设备接入需要自己的服务器。
 
 ## 本地预览与测试
 
 ```bash
-cd /home/vovl773/rd-web
+cd 你的项目目录
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/python serial_server.py --port 8002
@@ -586,8 +586,39 @@ USB 测试按行读取串口。MQTT 测试订阅指定 Broker，Broker 需要单
 - `news_content.py`、`scripts/build_site.py`：自动扫描文章与静态网站构建。
 - `devices.json`：公司设备、传感器、模拟快照与诊断数据。
 - `serial_server.py`、`mqtt_monitor.py`：本地 USB/MQTT 接收服务。
+- `LICENSE`：MIT 开源协议；`.github/workflows/pages.yml`：静态站自动构建与发布。
 
 使用 GitHub Actions 时提交网站源码、`_news`、`content`、构建脚本和工作流即可；手动部署时上传 `dist/` 内全部文件。请勿上传 `.venv`、WiFi 密码、固件私密配置或 Git 凭据。
+
+## 上传到 GitHub
+
+仓库已按公开分享准备好：根目录包含 `LICENSE`（MIT）、`.gitignore`、`.gitattributes`、`.editorconfig` 和 Pages 工作流。首次上传：
+
+```bash
+git status        # 确认没有待提交的敏感文件
+git remote add origin git@github.com:你的用户名/rd-web.git
+git push -u origin main
+```
+
+推送后到仓库 **Settings → Pages → Source** 选择 **GitHub Actions**，之后每次推送到 `main` 都会自动构建并发布静态演示站。
+
+以下内容刻意不纳入仓库，均已由 `.gitignore` 排除：
+
+- 本地与构建产物：`.venv/`、`dist/`、`__pycache__/`、`.pio/`；
+- 运行数据：`data/`（SQLite 数据库、备份、TLS 私钥）；
+- 真实部署配置：`config/platform.*.json`，仓库只保留 `*.example.json` 模板；
+- 固件私密配置：`firmware/**/secrets.h`（WiFi 密码与设备密钥）。
+
+克隆后本机运行，直接使用示例配置即可；需要改端口时复制一份再编辑（复制出的文件不会被提交）：
+
+```bash
+cp config/platform.local.example.json config/platform.local.json
+.venv/bin/python platform_server.py --config config/platform.local.json
+```
+
+## 开源协议
+
+本项目以 MIT 协议开源，详见 [LICENSE](LICENSE)。
 
 ## 客户开发者设备管理
 

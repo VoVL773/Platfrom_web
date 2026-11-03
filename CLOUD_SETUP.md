@@ -135,14 +135,16 @@ TLS 模式下载的设备配置会包含 MQTT_USE_TLS=1 和 MQTT_CA_CERT。升�
 
 ```bash
 .venv/bin/python scripts/create_local_tls.py --output data/tls-cloud \
-  --host 47.96.223.50 --host 你的域名 --host mqtt.你的域名
+  --host 203.0.113.10 --host 你的域名 --host mqtt.你的域名
 .venv/bin/python platform_server.py --config config/platform.ip.json
 ```
+
+> `203.0.113.10` 是文档示例地址，使用时换成你的服务器公网 IP。`config/platform.ip.json` 与 `config/platform.domain.json` 属于部署环境配置，不随仓库提供：参照 `config/platform.cloud.example.json` 复制一份，把 `public_origin`、`device_host` 改成自己的 IP 与域名即可。
 
 `data/tls-cloud/server-cert.pem` 的 SAN 同时包含 IP 和域名，所以**一张证书、一次烧录**就能覆盖两种阶段：
 
 - 现在：板子连 `device_host`（IP），浏览器开 `https://<IP>` 并手动信任自签 CA。
-- 备案后：把配置换成 `config/platform.domain.json`，`device_host` 变为 `mqtt.<域名>`，IP 自动成为回落地址；同一块板子不用重烧。
+- 备案后：把配置换成域名版，`device_host` 变为 `mqtt.<域名>`，IP 自动成为回落地址；同一块板子不用重烧。
 - 板子侧固件用 `MQTT_HOST_FALLBACK` 实现主地址失败后自动回落到 IP，`secrets.h` 由网页下载时自动带上。
 
 `public_origin` 写成数组后，同一份后端同时接受 IP 和域名来源，切换阶段不会出现“访问来源不被允许”。自签证书有效期 90 天，到期前用同一 CA 重签 `server-cert.pem` 即可，板端只需要信任 `root-ca.pem`。

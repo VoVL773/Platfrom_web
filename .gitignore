@@ -1,20 +1,34 @@
+# ── 本地环境与构建产物 ──────────────────────────────────────────
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pio/
+node_modules/
+*.log
+
+# 静态站构建输出（GitHub Actions 每次重新生成，不入库）
+dist/
+
+# ── 本机/生产环境配置 ─────────────────────────────────────────
+# 仓库只保留 *.example.json 模板；真实域名、IP、证书路径和数据库路径留在本机。
+config/platform.*.json
+!config/platform.*.example.json
+
+# 运行数据：SQLite 数据库、备份、TLS 私钥，一律不入库
+data/
+
+# ── 固件私密配置与构建目录 ────────────────────────────────────
+firmware/**/include/secrets.h
+firmware/**/arduino/**/secrets.h
+firmware/**/build/
+
+# ── 快照与临时文件 ───────────────────────────────────────────
+workspace-github*
+
+# 特定工具链目录，避免误提交
 .agents/
 .aws/
 .codex/
-
-workspace-github*
-__pycache__/
-*.py[cod]
-
-.venv/
-
-.pio/
-firmware/**/include/secrets.h
-firmware/**/build/
-
-dist/
-
-# Local platform registry and real device telemetry
-data/
-
-firmware/mega_mqtt_bridge/arduino/mega_mqtt_bridge/secrets.h
+.env
+.env.*
