@@ -13,3 +13,8 @@ firmware/**/include/secrets.h
 firmware/**/build/
 
 dist/
+
+# Local platform registry and real device telemetry
+data/
+
+firmware/mega_mqtt_bridge/arduino/mega_mqtt_bridge/secrets.h

@@ -1,0 +1,16 @@
+{
+  "host": "127.0.0.1",
+  "port": 8002,
+  "public_origin": ["https://47.96.223.50", "https://iot8407.asia"],
+  "mqtt_bind": "0.0.0.0",
+  "mqtt_port": 8883,
+  "device_host": "47.96.223.50",
+  "device_host_fallback": "mqtt.iot8407.asia",
+  "device_port": 8883,
+  "mqtt_cert": "../data/tls-cloud/server-cert.pem",
+  "mqtt_key": "../data/tls-cloud/server-key.pem",
+  "mqtt_ca": "../data/tls-cloud/root-ca.pem",
+  "retention_days": 90,
+  "database": "../data/platform.sqlite3",
+  "production": true
+}

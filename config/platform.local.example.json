@@ -1,0 +1,10 @@
+{
+  "host": "127.0.0.1",
+  "port": 8002,
+  "mqtt_bind": "127.0.0.1",
+  "mqtt_port": 1883,
+  "device_host": "127.0.0.1",
+  "retention_days": 90,
+  "database": "../data/platform.sqlite3",
+  "production": false
+}

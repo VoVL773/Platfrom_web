@@ -16,9 +16,11 @@ def build(output):
     if data['errors']:
         raise ValueError('\n'.join(data['errors']))
     output.mkdir(parents=True, exist_ok=True)
-    for name in ['index.html', 'app.js', 'telemetry.js', 'portal.js', 'visual.js', 'news.js', 'styles.css',
-                 'users.json', 'devices.json', 'platform.json']:
+    for name in ['index.html', 'app.js', 'telemetry.js', 'provisioning.js', 'platform_features.js', 'organization.js', 'portal.js', 'visual.js', 'news.js', 'styles.css',
+                 'users.json', 'devices.json', 'platform.json', 'favicon.svg', 'favicon.ico', 'favicon.png']:
         shutil.copy2(ROOT / name, output / name)
+    index = output / 'index.html'
+    index.write_text(index.read_text().replace('name="platform-mode" content="backend"', 'name="platform-mode" content="demo"'), encoding='utf-8')
     for name in ['content', 'assets']:
         if (ROOT / name).exists():
             shutil.copytree(ROOT / name, output / name, dirs_exist_ok=True)

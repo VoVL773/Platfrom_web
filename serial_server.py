@@ -75,6 +75,15 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         path = urlsplit(self.path)
+        if path.path in ('/', '/index.html') and not hasattr(self.server, 'registry'):
+            content = (Path(self.directory) / 'index.html').read_text().replace(
+                'name="platform-mode" content="backend"', 'name="platform-mode" content="demo"').encode()
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html; charset=utf-8')
+            self.send_header('Content-Length', str(len(content)))
+            self.end_headers()
+            self.wfile.write(content)
+            return
         if path.path in ('/api/messages', '/api/serial'):
             # Keep the hardware endpoint on the local preview origin.
             host = self.headers.get('Host', '')
@@ -126,7 +135,7 @@ class Handler(SimpleHTTPRequestHandler):
             templates = set()
         asset = (root / unquote(path.path).lstrip('/')).resolve()
         news_image = path.path.startswith('/assets/news/') and asset.is_relative_to((root / 'assets/news').resolve()) and asset.suffix.lower() in {'.png', '.jpg', '.jpeg', '.webp', '.gif', '.avif'}
-        if path.path not in templates | {'/', '/index.html', '/app.js', '/telemetry.js', '/visual.js', '/news.js', '/portal.js', '/styles.css', '/assets/workspace/city.jpg', '/users.json', '/platform.json', '/devices.json', '/favicon.ico'} and not news_image:
+        if path.path not in templates | {'/', '/index.html', '/app.js', '/telemetry.js', '/provisioning.js', '/platform_features.js', '/organization.js', '/visual.js', '/news.js', '/portal.js', '/styles.css', '/assets/workspace/city.jpg', '/users.json', '/platform.json', '/devices.json', '/favicon.ico', '/favicon.svg', '/favicon.png'} and not news_image:
             self.send_error(404)
             return
         super().do_GET()

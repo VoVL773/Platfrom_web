@@ -1,0 +1,16 @@
+{
+  "host": "127.0.0.1",
+  "port": 8002,
+  "public_origin": ["https://iot.example.com", "https://203.0.113.10"],
+  "mqtt_bind": "0.0.0.0",
+  "mqtt_port": 8883,
+  "device_host": "mqtt.example.com",
+  "device_host_fallback": "203.0.113.10",
+  "device_port": 8883,
+  "mqtt_cert": "../data/tls/mqtt-fullchain.pem",
+  "mqtt_key": "../data/tls/mqtt-key.pem",
+  "mqtt_ca": "../data/tls/root-ca.pem",
+  "retention_days": 90,
+  "database": "../data/platform.sqlite3",
+  "production": true
+}

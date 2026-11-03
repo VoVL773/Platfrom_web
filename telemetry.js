@@ -41,9 +41,13 @@ function applyTelemetry(d,row){
  d.online=mqttFresh(row,d.sampleInterval);
  if(!row)return;
  d.metrics=row.metrics;d.values={...row.values};d.lastSeen=row.time;
- d.history||={};
+ d.history||={};d.historyTimes||={};
  for(const m of row.metrics){
-  if(d.lastMessage!==row.sequence)d.history[m.key]=[...(d.history[m.key]||[]),row.values[m.key]].slice(-30);
+  if(d.lastMessage!==row.sequence){
+   const history=d.history[m.key]||[],times=history.map((_,i)=>d.historyTimes[m.key]?.[i]??null);
+   d.history[m.key]=[...history,row.values[m.key]].slice(-30);
+   d.historyTimes[m.key]=[...times,row.time||null].slice(-30);
+  }
  }
  d.lastMessage=row.sequence;
 }
@@ -74,7 +78,7 @@ function updateMqttDiscovery(){
  });
 }
 function syncMqttPolling(){
- const active=!!currentUser&&['company','detail','alerts','device-manage'].includes(view)&&(canManageDevices()&&view==='device-manage'||companyDevices().some(d=>d.mqtt));
+ const active=!platformBackend&&!!currentUser&&['company','detail','alerts','device-manage'].includes(view)&&(canManageDevices()&&view==='device-manage'||companyDevices().some(d=>d.mqtt));
  const session=active?`${currentUser.id}:${companyId}`:'';
  if(session===mqttSession)return;
  clearTimeout(mqttTimer);mqttTimer=null;mqttController?.abort();mqttSession=session;
@@ -100,7 +104,7 @@ function syncMqttPolling(){
    if(mqttSession===session){
     updateMqttDiscovery();
     // Preserve edits and focus while the background subscription continues.
-    if(view!=='device-manage'&&!document.activeElement?.closest('input,select,textarea'))render();
+    if(view!=='device-manage'&&!document.activeElement?.closest('input,select,textarea'))render(true);
     mqttTimer=setTimeout(poll,1500);
    }
   }

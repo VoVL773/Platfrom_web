@@ -130,3 +130,19 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{overflow-x:hidden}butto
 #mqtt-discovery{max-height:380px;overflow:auto;margin:12px 0}
 #mqtt-discovery>p,#mqtt-selection{font-size:12px;line-height:1.8;overflow-wrap:anywhere}
 .device-readings,.sampling-grid{grid-template-columns:repeat(auto-fit,minmax(90px,1fr))}
+
+/* Guided device registration and one-time board credentials. */
+.access-flow{display:flex;align-items:center;flex-wrap:wrap;gap:18px;padding:18px 22px;background:#edf4ff;border:1px solid #dce8fa;border-radius:10px;margin-bottom:16px;color:#315c8d;font-size:13px}.access-flow span{display:flex;align-items:center;gap:9px}.access-flow b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#2b64df;color:#fff}.access-flow i{font-style:normal;color:#9ab3d8}.access-result{border-color:#b3cff7!important}.access-result p,.access-result label,.access-steps{font-size:12px;color:#4c6d90;line-height:1.9}.access-result code,#existing-device-access code{overflow-wrap:anywhere;word-break:break-word}.access-result input{box-sizing:border-box;width:100%;font-family:monospace;margin:8px 0 14px}.access-result .settings-actions{display:flex;gap:8px;flex-wrap:wrap}.access-result .settings-actions button{font-size:11px}#existing-device-access:not(:empty){margin-top:18px;padding:18px;background:#f5f8fd;border-radius:8px;font-size:12px;color:#4c6d90}#registry-status{font-size:12px;color:#6b84a0;min-height:18px}.inventory-table td:last-child .secondary{margin:5px}.inventory-table .badge{white-space:nowrap}@media(max-width:650px){.access-flow{gap:10px;padding:14px;font-size:11px}.access-flow i{display:none}.access-result .settings-actions button{flex:1 1 130px}}
+
+/* Sampling details are available with a pointer, touch or keyboard focus. */
+.trend-point{cursor:pointer;outline:none}.trend-tooltip{display:none;pointer-events:none}.trend-point:hover .trend-tooltip,.trend-point:focus .trend-tooltip{display:block}.trend-point:hover .trend-dot,.trend-point:focus .trend-dot{r:5;stroke:#fff;stroke-width:2}
+
+.history-panel{margin-top:24px;padding:24px}.history-panel>.section-heading{padding:0;margin-top:0}.history-panel form{display:flex;align-items:end;gap:16px;flex-wrap:wrap}.history-panel label{margin-top:0}.history-panel input{max-width:240px}.history-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}.history-metric{min-width:0}.history-metric h3{font-size:13px;color:#657893}.history-payload{white-space:pre-wrap;overflow-wrap:anywhere;max-width:520px}.account-password{padding:24px;margin-top:24px;max-width:560px}.account-password h2{font-size:18px}.account-password button{margin-top:18px}
+
+/* Company administration */
+.member-permissions{padding:16px 0;border-bottom:1px solid #e5eaf3}
+.member-permissions h3 small{display:block;margin-top:5px;font-weight:400;color:#64748b}
+.grant-option{display:flex!important;align-items:center;gap:10px;flex-wrap:wrap}
+.grant-option input[type=checkbox]{width:18px;height:18px;flex:none}
+.scene-edit-form{padding-top:16px;margin-top:16px;border-top:1px solid #e5eaf3}
+#invite-result{overflow-wrap:anywhere;user-select:all}
