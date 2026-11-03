@@ -545,7 +545,9 @@ cp dist/news-index.json news-index.json
 
 ### GitHub Pages 自动发布
 
-仓库已包含 `.github/workflows/pages.yml`。在 GitHub 仓库 **Settings → Pages → Source** 选择 **GitHub Actions**，之后推送到 `main` 会自动扫描 `_news/`、生成 `dist/` 并发布。文章格式错误会让构建失败，避免静默漏发；本地新闻页会显示错误文件。Pages 只托管静态演示站，后端平台与设备接入需要自己的服务器。
+仓库已包含 `.github/workflows/pages.yml`。推送到 `main` 会自动扫描 `_news/`、生成 `dist/` 并发布；首次部署时工作流会尝试自动启用 Pages，也可以手动在 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。文章格式错误会让构建失败，避免静默漏发；本地新闻页会显示错误文件。Pages 只托管静态演示站，后端平台与设备接入需要自己的服务器。
+
+部署失败时按提示区分处理：`Get Pages site failed` / `Not Found` 通常是 Pages 未启用或源不是 GitHub Actions，按上面的设置改完重跑整个工作流；`Resource not accessible` 是仓库 **Settings → Actions → General → Workflow permissions** 权限不足；如果仓库是 **Private** 且账号套餐不含 Pages，需要先把仓库改为 **Public**。`Artifact not found` 则应重跑整个工作流，而不是只重跑 deploy 任务。
 
 ## 本地预览与测试
 
