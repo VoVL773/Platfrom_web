@@ -452,10 +452,19 @@ node tests/portal.test.cjs
 | 身份 | 登录后入口 | 功能 |
 | --- | --- | --- |
 | 平台管理员 `admin` | 供应链平台 | 农牧链 / 工业链 / 物流链 / 测试，查看公司，编辑公司 Markdown 页面 |
+| 公司管理员 `company_admin` | 所属公司 | 首页 / 新闻 / 我的，管理本公司设备与场景；邀请码和成员管理需要后端 |
 | 客户开发者 `developer` | 所属公司 | 首页 / 新闻 / 我的，查看设备，添加 / 删除 / 恢复本公司设备，修改阈值、查看报错 |
 | 客户 `customer` | 所属公司 | 首页 / 新闻 / 我的，只读设备数据 |
 
-演示账号为 `admin`、`developer`、`customer`、`customer_b`，密码均为 `123456`。`customer` 和 `developer` 属于公司 A；`customer_b` 属于公司 B。
+演示账号密码均为 `123456`：
+
+| 账号 | 身份 | 公司 |
+| --- | --- | --- |
+| `admin` / `platform_admin` | 平台管理员 | — |
+| `company_admin` | 公司管理员 | 公司 A |
+| `developer` / `company_developer` | 客户开发者 | 公司 A |
+| `customer` / `company_customer` | 客户 | 公司 A |
+| `customer_b` | 客户 | 公司 B |
 
 管理员进入农牧链后可选种植园、养殖场；工业链可选生产、维保；物流链可选仓储，云仓物流展示仓库温度、湿度与光照强度的模拟采样。进入场景后选择公司。
 

@@ -34,6 +34,41 @@
       "role": "customer",
       "companyId": "company-b",
       "title": "客户"
+    },
+    {
+      "id": "u005",
+      "username": "platform_admin",
+      "name": "陆遥",
+      "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "role": "admin",
+      "title": "平台管理员"
+    },
+    {
+      "id": "u006",
+      "username": "company_admin",
+      "name": "苏芮",
+      "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "role": "company_admin",
+      "title": "公司管理员",
+      "companyId": "company-a"
+    },
+    {
+      "id": "u007",
+      "username": "company_developer",
+      "name": "何川",
+      "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "role": "developer",
+      "title": "客户开发者",
+      "companyId": "company-a"
+    },
+    {
+      "id": "u008",
+      "username": "company_customer",
+      "name": "顾言",
+      "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "role": "customer",
+      "title": "客户",
+      "companyId": "company-a"
     }
   ]
 }
